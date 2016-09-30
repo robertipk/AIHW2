@@ -1,18 +1,21 @@
 # Robert Ip, CISC 3410, Program #2
 # https://github.com/robertipk/AIHW2
 require_relative 'utilities'
+require 'pry'
 
 class Board
   def initialize(string)
     @board = Array.new
     index = 0
-    if string.length != 81
+    string_arr = string.split(",")
+    if string_arr.length != 81
       puts "Cannot intialize - incorrect input"
     else
       9.times do
         row = Array.new
         9.times do
-          row.push(string[index])
+          new_cell = Cell.new(string_arr[index])
+          row.push(new_cell)
           index += 1
         end
         @board.push(row)
@@ -20,7 +23,7 @@ class Board
     end
   end
 
-  def print_board
+  def print
     @board.each do |row|
       row.each do |tile|
         p tile.value + " "
@@ -45,19 +48,20 @@ class Board
     for x in 0...9
       arr = []
       for y in 0...9
-        arr << @board[x][y]
+        arr << @board[x][y].value
       end
       if !no_dups(arr)
         return false
       end
     end
+
     # checks all columns
     for x in 0...9
       arr = []
       for y in 0...9
-        arr << @board[y][x]
+        arr << @board[y][x].value
       end
-      if !no_dup(arr)
+      if !no_dups(arr)
         return false
       end
     end
