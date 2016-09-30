@@ -1,6 +1,7 @@
 # Robert Ip, CISC 3410, Program #2
 # https://github.com/robertipk/AIHW2
-require 'Puzzle'
+require_relative 'puzzle'
+
 
 # AC-3 algorithm
 def ac3
