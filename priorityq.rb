@@ -1,6 +1,5 @@
 # Robert Ip, CISC 3410, Program #2
 # https://github.com/robertipk/AIHW2
-
 require_relative 'puzzle'
 require_relative 'cell'
 

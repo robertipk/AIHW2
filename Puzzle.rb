@@ -4,10 +4,8 @@ require_relative 'utilities'
 require_relative 'cell'
 require_relative 'priorityq'
 require_relative 'algorithms'
-
-
-
 require 'pry'
+
 class Board
   attr_accessor :MRVheap
   def initialize(string)
@@ -28,12 +26,9 @@ class Board
         @board.push(row)
       end
     end
-   # add constraints to the appropriate cells
+   # add constraints
     for x in 0...9
       for y in 0...9
-        if @board[x][y].possibilities==nil
-          binding.pry
-        end
         num = @board[x][y].value.to_i
         if num!=0
           @board[x][y].preset = true
@@ -48,7 +43,6 @@ class Board
         end
       end
     end
-    binding.pry
   end
 
   #returns next cell off the min heap
@@ -64,7 +58,7 @@ class Board
       puts ""
     end
   end
-
+# checks if all squares are filled with numbers
   def is_complete?
     for x in 0...9
       for y in 0...9
@@ -76,8 +70,8 @@ class Board
     true
   end
 
+  # check if puzzle is solved
   def is_solved?
-    # checks all columns
     for x in 0...9
       arr = []
       for y in 0...9
@@ -102,7 +96,6 @@ class Board
     if !check_all_regions
       return false
     end
-
     true
   end
 
@@ -157,10 +150,5 @@ class Board
      end
    end
    neighbors
-  end
-
-  # minimum remaining value heuristic
-  def MRV
-
   end
 end
