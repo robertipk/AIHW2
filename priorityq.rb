@@ -2,7 +2,7 @@
 # https://github.com/robertipk/AIHW2
 
 require_relative 'puzzle'
-require_relative 'square'
+require_relative 'cell'
 
 class PriorityQueue
   def initialize

@@ -2,7 +2,7 @@
 # https://github.com/robertipk/AIHW2
 class Cell
   attr_accessor :value,:possibilities
-  def initialize(value=".")
+  def initialize(value="0")
    @value = value
    @possibilities = [1,2,3,4,5,6,7,8,9]
   end

@@ -1,14 +1,17 @@
 # Robert Ip, CISC 3410, Program #2
 # https://github.com/robertipk/AIHW2
 require_relative 'utilities'
-require 'pry'
+require_relative 'cell'
+require_relative 'priorityq'
 
+
+require 'pry'
 class Board
   def initialize(string)
     @MRV_priorityQ = PriorityQueue.new
     @board = Array.new
     index = 0
-    string_arr = string.split(",")
+    string_arr = string.split("")
     if string_arr.length != 81
       puts "Cannot intialize - incorrect input"
     else
@@ -20,6 +23,21 @@ class Board
           index += 1
         end
         @board.push(row)
+      end
+    end
+   # add constraints to the appropriate cells
+    for x in 0...9
+      for y in 0...9
+        num = @board[x][y].value
+        if num!=0
+          neighbors = get_neighbors(x,y)
+          neighbors.each do |cell|
+            if cell==nil
+              puts "this cell is nil" + x.to_s + y.to_s
+            end
+            cell.add_constraint(num)
+          end
+        end
       end
     end
   end
@@ -112,16 +130,28 @@ class Board
    region_col = y/3
    # add nieghbors in row
    for x in 0...9
-     neighors << @board[row][y]
+     if @board[row][y]==nil
+       puts "here"
+       binding.pry
+     end
+     neighbors << @board[row][y]
    end
    # add neighbors in column
    for x in 0...9
-     neighors << @board[x][column]
+     if @board[x][column]==nil
+       puts "here"
+       binding.pry
+     end
+     neighbors << @board[x][column]
    end
    # add neighbors in subregion
-   for x in row...row+3
-     for y in column...column+3
-       neighbors << @board[x][y]
+   for a in row-1...row+3
+     for b in column-1...column+3
+       if @board[a][b]==nil
+         puts "here"
+         binding.pry
+       end
+       neighbors << @board[a][b]
      end
    end
    neighbors
@@ -131,6 +161,4 @@ class Board
   def MRV
 
   end
-
-
 end
