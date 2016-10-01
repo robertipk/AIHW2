@@ -9,6 +9,10 @@ class PriorityQueue
     @elements = [nil]
   end
 
+  def get_length
+    @elements.length
+  end
+
   def getElements
     @elements
   end
@@ -69,11 +73,11 @@ class PriorityQueue
     not_the_last_element = child_index < @elements.size - 1
     left_element = @elements[child_index]
     right_element = @elements[child_index + 1]
-    child_index += 1 if not_the_last_element && right_element.get_f < left_element.get_f
+    child_index += 1 if not_the_last_element && right_element.num_of_MRVs < left_element.num_of_MRVs
 
     # there is no need to continue if the parent element is already bigger
     # then its children
-    return if @elements[index].get_f <= @elements[child_index].get_f
+    return if @elements[index].num_of_MRVs <= @elements[child_index].num_of_MRVs
 
     exchange(index, child_index)
 

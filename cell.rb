@@ -9,6 +9,7 @@ class Cell
 
   # removes number from possible remaining values
   def add_constraint(number)
+    # binding.pry
     @possibilities.delete(number)
   end
 

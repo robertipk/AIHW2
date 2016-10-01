@@ -8,7 +8,7 @@ require_relative 'priorityq'
 require 'pry'
 class Board
   def initialize(string)
-    @MRV_priorityQ = PriorityQueue.new
+    @MRVheap = PriorityQueue.new
     @board = Array.new
     index = 0
     string_arr = string.split("")
@@ -28,23 +28,22 @@ class Board
    # add constraints to the appropriate cells
     for x in 0...9
       for y in 0...9
-        num = @board[x][y].value
+        num = @board[x][y].value.to_i
         if num!=0
+          @MRVheap << @board[x][y]
           neighbors = get_neighbors(x,y)
           neighbors.each do |cell|
-            if cell==nil
-              puts "this cell is nil" + x.to_s + y.to_s
-            end
             cell.add_constraint(num)
           end
         end
       end
     end
+    binding.pry
   end
 
   #returns next cell off the min heap
   def next_cell
-    @MRV_priorityQ.pop
+    @MRVheap.pop
   end
 
   def print
@@ -126,31 +125,19 @@ class Board
    neighbors = Array.new
    row = x
    column = y
-   region_row = x/3
-   region_col = y/3
+   region_row = 3*(x/3)
+   region_col = 3*(y/3)
    # add nieghbors in row
    for x in 0...9
-     if @board[row][y]==nil
-       puts "here"
-       binding.pry
-     end
      neighbors << @board[row][y]
    end
    # add neighbors in column
    for x in 0...9
-     if @board[x][column]==nil
-       puts "here"
-       binding.pry
-     end
      neighbors << @board[x][column]
    end
    # add neighbors in subregion
-   for a in row-1...row+3
-     for b in column-1...column+3
-       if @board[a][b]==nil
-         puts "here"
-         binding.pry
-       end
+   for a in region_row...region_row+3
+     for b in region_col...region_col+3
        neighbors << @board[a][b]
      end
    end
