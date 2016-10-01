@@ -35,3 +35,5 @@ board = Board.new(sample_string)
 board.print
 puts board.is_solved?
 puts board.is_complete?
+
+solve_with_backtracking(board)

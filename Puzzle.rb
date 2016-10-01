@@ -3,6 +3,8 @@
 require_relative 'utilities'
 require_relative 'cell'
 require_relative 'priorityq'
+require_relative 'algorithms'
+
 
 
 require 'pry'
@@ -13,12 +15,12 @@ class Board
     index = 0
     string_arr = string.split("")
     if string_arr.length != 81
-      puts "Cannot intialize - incorrect input"
+      puts "Cannot intialize board - incorrect input"
     else
-      9.times do
+      for x in 0...9
         row = Array.new
-        9.times do
-          new_cell = Cell.new(string_arr[index])
+        for y in 0...9
+          new_cell = Cell.new(string_arr[index],x,y)
           row.push(new_cell)
           index += 1
         end
@@ -38,7 +40,6 @@ class Board
         end
       end
     end
-    binding.pry
   end
 
   #returns next cell off the min heap
