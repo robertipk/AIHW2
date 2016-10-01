@@ -5,6 +5,7 @@ require 'pry'
 
 class Board
   def initialize(string)
+    @MRV_priorityQ = PriorityQueue.new
     @board = Array.new
     index = 0
     string_arr = string.split(",")
@@ -21,6 +22,11 @@ class Board
         @board.push(row)
       end
     end
+  end
+
+  #returns next cell off the min heap
+  def next_cell
+    @MRV_priorityQ.pop
   end
 
   def print
@@ -96,5 +102,35 @@ class Board
      end
      true
   end
+
+  # return the neighbors of the cell at the specified coordinates, including the cell itself
+  def get_neighbors(x,y)
+   neighbors = Array.new
+   row = x
+   column = y
+   region_row = x/3
+   region_col = y/3
+   # add nieghbors in row
+   for x in 0...9
+     neighors << @board[row][y]
+   end
+   # add neighbors in column
+   for x in 0...9
+     neighors << @board[x][column]
+   end
+   # add neighbors in subregion
+   for x in row...row+3
+     for y in column...column+3
+       neighbors << @board[x][y]
+     end
+   end
+   neighbors
+  end
+
+  # minimum remaining value heuristic
+  def MRV
+
+  end
+
 
 end
