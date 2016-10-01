@@ -9,6 +9,7 @@ require_relative 'algorithms'
 
 require 'pry'
 class Board
+  attr_accessor :MRVheap
   def initialize(string)
     @MRVheap = PriorityQueue.new
     @board = Array.new
@@ -30,16 +31,24 @@ class Board
    # add constraints to the appropriate cells
     for x in 0...9
       for y in 0...9
+        if @board[x][y].possibilities==nil
+          binding.pry
+        end
         num = @board[x][y].value.to_i
         if num!=0
-          @MRVheap << @board[x][y]
+          @board[x][y].preset = true
           neighbors = get_neighbors(x,y)
           neighbors.each do |cell|
             cell.add_constraint(num)
           end
         end
+        if num == 0
+          # add cell to the minheap for forward checking only if it is a blank tile
+          @MRVheap << @board[x][y]
+        end
       end
     end
+    binding.pry
   end
 
   #returns next cell off the min heap
@@ -47,7 +56,7 @@ class Board
     @MRVheap.pop
   end
 
-  def print_state
+  def print_board
     @board.each do |row|
       row.each do |tile|
         print tile.value.to_s + " "

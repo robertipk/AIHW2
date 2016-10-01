@@ -9,9 +9,11 @@ end
 
 # backtracking using minimum remaining value heuristic
 def solve_with_backtracking(sudoku)
+  # print output to txt file for debugging
+  outfile = File.open("log.txt","w")
+
   # select cell with MRV off the min heap
   candidate = sudoku.next_cell
-  binding.pry
   values_to_try = Array.new
   candidate.get_RVs.each do |value|
     values_to_try << value
@@ -34,7 +36,7 @@ def solve_with_backtracking(sudoku)
   # forward checking to reduce neighbors' domains
     neighbors.each do |cell|
       cell.add_constraint(candidate.value)
-      if cell.num_of_MRVs == 0
+      if cell.num_of_MRVs == 0 && !cell.preset
         # if forward checking reduces all values for a neighbor, backtrack
         neighbors.each do |neighbor|
           neighbor.undo_constraint(candidate.value)
@@ -48,13 +50,11 @@ def solve_with_backtracking(sudoku)
     end
   # at this point, no contradictions were found when doing forward checking
   # now recurse
-  puts "Cell" + candidate.x_coord.to_s + " " + candidate.y_coord.to_s + " " + candidate.value.to_s
-  puts "trying next number"
-  sudoku.print_state
-    if solve_with_backtracking(sudoku)
-      return
-    end
+  # sudoku.print_board
+   solve_with_backtracking(sudoku)
   end
   # if method reaches this block, all values have been tried unsuccessfully
+  # return the cell to the min heap, then return false
+  sudoku.MRVheap << candidate
   false
 end

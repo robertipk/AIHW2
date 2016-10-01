@@ -1,11 +1,13 @@
 # Robert Ip, CISC 3410, Program #2
 # https://github.com/robertipk/AIHW2
+require 'pry'
 class Cell
-  attr_accessor :value,:possibilities,:x_coord,:y_coord
+  attr_accessor :value,:possibilities,:x_coord,:y_coord,:preset
   def initialize(value="0",x_coord,y_coord)
    @x_coord = x_coord
    @y_coord = y_coord
    @value = value
+   @preset = false
    @possibilities = [1,2,3,4,5,6,7,8,9]
   end
 
@@ -26,9 +28,12 @@ class Cell
 
   # adds number back to the possible remaining values
   def undo_constraint(number)
-  
-    if !@possibilites.include?(number)
-      @possibilites << number
+    if @possibilities==nil
+      puts "This cell's possibilities are nil"
+      binding.pry
+    end
+    if !@possibilities.include?(number)
+      @possibilities << number
     end
   end
 

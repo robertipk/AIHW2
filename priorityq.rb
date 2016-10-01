@@ -6,7 +6,11 @@ require_relative 'cell'
 
 class PriorityQueue
   def initialize
-    @elements = [nil]
+    @elements = []
+  end
+
+  def contains?(tile)
+    @elements.include?(tile)
   end
 
   def get_length
