@@ -47,10 +47,10 @@ class Board
     @MRVheap.pop
   end
 
-  def print
+  def print_state
     @board.each do |row|
       row.each do |tile|
-        p tile.value + " "
+        print tile.value.to_s + " "
       end
       puts ""
     end
@@ -129,25 +129,24 @@ class Board
    region_col = 3*(column/3)
    # add nieghbors in row
    for p in 0...9
-     if column != p
+     unless column == p
       neighbors << @board[row][p]
      end
    end
    # add neighbors in column
    for d in 0...9
-     if row != d
+     unless row == d
       neighbors << @board[d][column]
      end
    end
    # add neighbors in subregion
    for a in region_row...region_row+3
      for b in region_col...region_col+3
-       if a != row && b != column
+       unless a == row && b == column
         neighbors << @board[a][b]
        end
      end
    end
-   binding.pry
    neighbors
   end
 

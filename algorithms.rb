@@ -11,6 +11,7 @@ end
 def solve_with_backtracking(sudoku)
   # select cell with MRV off the min heap
   candidate = sudoku.next_cell
+  binding.pry
   values_to_try = Array.new
   candidate.get_RVs.each do |value|
     values_to_try << value
@@ -49,6 +50,7 @@ def solve_with_backtracking(sudoku)
   # now recurse
   puts "Cell" + candidate.x_coord.to_s + " " + candidate.y_coord.to_s + " " + candidate.value.to_s
   puts "trying next number"
+  sudoku.print_state
     if solve_with_backtracking(sudoku)
       return
     end
