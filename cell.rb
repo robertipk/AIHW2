@@ -3,7 +3,7 @@
 require 'pry'
 class Cell
   attr_accessor :value,:remaining_vals,:x_coord,:y_coord,:preset
-  def initialize(value="0",x_coord,y_coord)
+  def initialize(value=0,x_coord,y_coord)
    @x_coord = x_coord
    @y_coord = y_coord
    @value = value

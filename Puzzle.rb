@@ -6,8 +6,8 @@ require_relative 'priorityq'
 require_relative 'algorithms'
 require 'pry'
 
-class Board
-  attr_accessor :MRVheap
+class Game
+  attr_accessor :MRVheap,:board
   def initialize(string)
     @MRVheap = PriorityQueue.new
     @board = Array.new
@@ -19,7 +19,7 @@ class Board
       for x in 0...9
         row = Array.new
         for y in 0...9
-          new_cell = Cell.new(string_arr[index],x,y)
+          new_cell = Cell.new(string_arr[index].to_i,x,y)
           row.push(new_cell)
           index += 1
         end
@@ -43,6 +43,7 @@ class Board
         end
       end
     end
+    binding.pry
   end
 
   #returns next cell off the min heap
@@ -62,7 +63,7 @@ class Board
   def is_complete?
     for x in 0...9
       for y in 0...9
-        if @board[x][y]=="."
+        if @board[x][y]==0
           return false
         end
       end
@@ -75,7 +76,7 @@ class Board
     for x in 0...9
       arr = []
       for y in 0...9
-        arr << @board[x][y].value
+        arr << @board[x][y].value.to_i
       end
       if !no_dups(arr)
         return false
@@ -86,7 +87,7 @@ class Board
     for x in 0...9
       arr = []
       for y in 0...9
-        arr << @board[y][x].value
+        arr << @board[y][x].value.to_i
       end
       if !no_dups(arr)
         return false
@@ -104,7 +105,7 @@ class Board
     arr = []
     for x in row...row+3
       for y in column...column+3
-        arr << @board[x][y].value
+        arr << @board[x][y].value.to_i
       end
     end
     if !no_dups(arr)

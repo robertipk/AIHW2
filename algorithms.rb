@@ -9,8 +9,13 @@ end
 # backtracking using minimum remaining value heuristic
 def solve_with_backtracking(sudoku)
   sudoku.print_board
+  binding.pry
+
   puts ""
   candidate = sudoku.next_cell
+  if candidate==nil
+    # binding.pry
+  end
   values_to_try = candidate.remaining_vals.dup
   forward_checking_failed = false
   neighbors = sudoku.get_neighbors(candidate.x_coord,candidate.y_coord)
@@ -36,11 +41,13 @@ def solve_with_backtracking(sudoku)
     if forward_checking_failed
       puts "forward checking failed"
       neighbors.each do |neighbor|
+        # RIGHT NOW IT"S ADDING CONSTRAINTS TO ALLLLL NEIGHBORS> FIX THIS
         neighbor.undo_constraint(candidate.value)
       end
       candidate.value = 0
     else
       # recurse - move on to fill in next square
+      puts "Just filled square " + candidate.x_coord.to_s + " " + candidate.y_coord.to_s + "    " + candidate.value.to_s
       if !solve_with_backtracking(sudoku)
         # backtrack this number. undo addition of constraints
         neighbors.each do |neighbor|

@@ -4,6 +4,7 @@ require_relative 'puzzle'
 require_relative 'cell'
 
 class PriorityQueue
+  attr_accessor :elements
   def initialize
     @elements = []
   end
