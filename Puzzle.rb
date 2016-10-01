@@ -121,27 +121,33 @@ class Board
      true
   end
 
-  # return the neighbors of the cell at the specified coordinates, including the cell itself
-  def get_neighbors(x,y)
+  # return the neighbors of the cell at the specified coordinates
+  # does NOT include the cell itself
+  def get_neighbors(row,column)
    neighbors = Array.new
-   row = x
-   column = y
-   region_row = 3*(x/3)
-   region_col = 3*(y/3)
+   region_row = 3*(row/3)
+   region_col = 3*(column/3)
    # add nieghbors in row
-   for x in 0...9
-     neighbors << @board[row][y]
+   for p in 0...9
+     if column != p
+      neighbors << @board[row][p]
+     end
    end
    # add neighbors in column
-   for x in 0...9
-     neighbors << @board[x][column]
+   for d in 0...9
+     if row != d
+      neighbors << @board[d][column]
+     end
    end
    # add neighbors in subregion
    for a in region_row...region_row+3
      for b in region_col...region_col+3
-       neighbors << @board[a][b]
+       if a != row && b != column
+        neighbors << @board[a][b]
+       end
      end
    end
+   binding.pry
    neighbors
   end
 

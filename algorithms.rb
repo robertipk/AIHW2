@@ -45,11 +45,13 @@ def solve_with_backtracking(sudoku)
         break
       end
     end
-  # at this point, no contradictions found when doing forward checking
-  # recurse by filling next cell with MRVs
+  # at this point, no contradictions were found when doing forward checking
+  # now recurse
   puts "Cell" + candidate.x_coord.to_s + " " + candidate.y_coord.to_s + " " + candidate.value.to_s
   puts "trying next number"
-    solve_with_backtracking(sudoku)
+    if solve_with_backtracking(sudoku)
+      return
+    end
   end
   # if method reaches this block, all values have been tried unsuccessfully
   false
