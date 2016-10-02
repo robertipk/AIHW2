@@ -18,11 +18,15 @@ class Cell
   end
 
   def num_of_MRVs
+    if @remaining_vals == 5
+      binding.pry
+    end
     @remaining_vals.length
   end
 
   # adds number back to the possible remaining values
   def undo_constraint(number)
+    puts "undoing constrint"
     if !@remaining_vals.include?(number)
       @remaining_vals << number
     end

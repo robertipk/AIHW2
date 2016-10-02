@@ -2,11 +2,11 @@
 # https://github.com/robertipk/AIHW2
 require_relative 'puzzle'
 require_relative 'cell'
-
+require 'pry'
 class PriorityQueue
   attr_accessor :elements
   def initialize
-    @elements = []
+    @elements = [nil]
   end
 
   def contains?(tile)
@@ -90,3 +90,23 @@ class PriorityQueue
     bubble_down(child_index)
   end
 end
+
+# testing the priority queue
+pq = PriorityQueue.new
+cell1 = Cell.new(1,3,4)
+cell1.remaining_vals = [1]
+cell2 = Cell.new(2,3,4)
+cell2.remaining_vals = [1,2]
+cell3 = Cell.new(3,3,4)
+cell3.remaining_vals = [1,2,3,4,5]
+cell4 = Cell.new(4,3,4)
+cell4.remaining_vals = [1,2,3,4,5,6,7,8]
+cell5 = Cell.new(5,3,4)
+cell5.remaining_vals = [1,2,3,4]
+
+pq << cell1
+pq << cell2
+pq << cell3
+pq << cell4
+pq << cell5
+binding.pry
