@@ -48,7 +48,6 @@ class Game
         end
       end
     end
-    binding.pry
   end
 
   #returns next cell off the min heap

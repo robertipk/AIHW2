@@ -23,7 +23,6 @@ class Cell
 
   # adds number back to the possible remaining values
   def undo_constraint(number)
-    puts "undoing constrint"
     if !@remaining_vals.include?(number)
       @remaining_vals << number
     end

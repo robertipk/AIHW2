@@ -8,14 +8,16 @@ end
 
 # backtracking using minimum remaining value heuristic
 def solve_with_backtracking(sudoku)
-  # check if the board is complete
+
   if sudoku.is_complete?
     if sudoku.is_solved?
-      binding.pry
+      puts "SOLVED=+++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
       return true
     end
   end
-  sudoku.print_board
+  if sudoku.MRVheap.elements[1]==nil
+    binding.pry
+  end
   candidate = sudoku.next_cell
   values_to_try = candidate.remaining_vals.dup
   forward_checking_failed = false
@@ -25,24 +27,28 @@ def solve_with_backtracking(sudoku)
     candidate.value = values_to_try.shift
     original_RVs = values_to_try.dup
     modified_cells = Array.new
+
   # forward checking to reduce neighbors' domains
-    neighbors.each do |cell|
-      if cell.remaining_vals.include?(candidate.value) && !cell.preset
-        cell.add_constraint(candidate.value)
-        modified_cells << cell
-        if cell.num_of_MRVs == 0 && !cell.preset
-          puts "CELL FAILED " + cell.x_coord.to_s + " " + cell.y_coord.to_s + " when value of " + candidate.value.to_s + " is placed at " + candidate.x_coord.to_s + " " + candidate.y_coord.to_s
+    for x in 0...neighbors.length
+      if neighbors[x].remaining_vals.include?(candidate.value) && !neighbors[x].preset
+        neighbors[x].add_constraint(candidate.value)
+        modified_cells << neighbors[x]
+        if neighbors[x].num_of_MRVs == 0 && !neighbors[x].preset
           forward_checking_failed = true
-        # this value doesn't work! we need to backtrack and try the next value in values_to_try
+          binding.pry
           break
         end
       end
     end
 
     if forward_checking_failed
-      puts "forward checking failed"
+      binding.pry
       modified_cells.each do |neighbor|
         neighbor.undo_constraint(candidate.value)
+      end
+      updated_heap = PriorityQueue.new
+      while sudoku.MRVheap.get_length > 1
+        updated_heap << sudoku.MRVheap.pop
       end
       candidate.value = 0
     elsif !forward_checking_failed
@@ -52,10 +58,11 @@ def solve_with_backtracking(sudoku)
         updated_heap << sudoku.MRVheap.pop
       end
       sudoku.MRVheap = updated_heap
-      puts "Just filled square " + candidate.x_coord.to_s + " " + candidate.y_coord.to_s + "    " + candidate.value.to_s
+      # puts "Just filled square " + candidate.x_coord.to_s + " " + candidate.y_coord.to_s + "    " + candidate.value.to_s
       # clear this cell's domain because it has been solved already
       candidate.remaining_vals.clear
-      if !solve_with_backtracking(sudoku)
+      solved = solve_with_backtracking(sudoku)
+      if !solved
         # backtrack this number. undo addition of constraints. restore the possibilites, minus value that just failed
         candidate.remaining_vals = original_RVs
         candidate.remaining_vals.delete(candidate.value.to_i)
@@ -65,9 +72,15 @@ def solve_with_backtracking(sudoku)
         updated_heap = PriorityQueue.new
         while sudoku.MRVheap.get_length > 1
           updated_heap << sudoku.MRVheap.pop
-        end      
+        end
+      elsif solved
+        return true
       end
     end
+  end
+  updated_heap = PriorityQueue.new
+  while sudoku.MRVheap.get_length > 1
+    updated_heap << sudoku.MRVheap.pop
   end
   # if method reaches this block, all values have been tried unsuccessfully
   # return the cell to the min heap IN ITS ORIGINAL STATE, then return false
