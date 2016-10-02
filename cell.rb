@@ -18,9 +18,6 @@ class Cell
   end
 
   def num_of_MRVs
-    if @remaining_vals == 5
-      binding.pry
-    end
     @remaining_vals.length
   end
 

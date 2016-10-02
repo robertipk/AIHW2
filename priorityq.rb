@@ -89,24 +89,44 @@ class PriorityQueue
     # is larger than its children
     bubble_down(child_index)
   end
+
+  # debugging method. counts number of cells with only one remaining value in the domain
+  def one_rv
+   count = 0
+   for x in 1...@elements.length
+     if @elements[x].remaining_vals.length == 1
+       count+=1
+     end
+   end
+   count
+  end
 end
 
 # testing the priority queue
-pq = PriorityQueue.new
-cell1 = Cell.new(1,3,4)
-cell1.remaining_vals = [1]
-cell2 = Cell.new(2,3,4)
-cell2.remaining_vals = [1,2]
-cell3 = Cell.new(3,3,4)
-cell3.remaining_vals = [1,2,3,4,5]
-cell4 = Cell.new(4,3,4)
-cell4.remaining_vals = [1,2,3,4,5,6,7,8]
-cell5 = Cell.new(5,3,4)
-cell5.remaining_vals = [1,2,3,4]
-
-pq << cell1
-pq << cell2
-pq << cell3
-pq << cell4
-pq << cell5
-binding.pry
+# pq = PriorityQueue.new
+# cell1 = Cell.new(1,3,4)
+# cell1.remaining_vals = [1]
+# cell2 = Cell.new(2,3,4)
+# cell2.remaining_vals = [1,2]
+# cell3 = Cell.new(3,3,4)
+# cell3.remaining_vals = [1,2,3,4,5]
+# cell4 = Cell.new(4,3,4)
+# cell4.remaining_vals = [1,2,3,4,5,6,7,8]
+# cell5 = Cell.new(5,3,4)
+# cell5.remaining_vals = [1,2,3,4]
+# cell6 = Cell.new(6,3,4)
+# cell6.remaining_vals = [1]
+# cell7 = Cell.new(7,3,4)
+# cell7.remaining_vals = [1]
+# cell8 = Cell.new(8,3,4)
+# cell8.remaining_vals = [1]
+#
+# pq << cell1
+# pq << cell2
+# pq << cell3
+# pq << cell4
+# pq << cell5
+# pq << cell6
+# pq << cell7
+# pq << cell8
+# binding.pry

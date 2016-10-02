@@ -37,8 +37,13 @@ class Game
             cell.add_constraint(num)
           end
         end
-        if num == 0
-          # add cell to the minheap for forward checking only if it is a blank tile
+      end
+    end
+    # add to min heap
+    for x in 0...9
+      for y in 0...9
+        # add cell to the minheap for forward checking only if it is a blank tile
+        if @board[x][y].value.to_i == 0
           @MRVheap << @board[x][y]
         end
       end

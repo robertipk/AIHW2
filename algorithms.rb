@@ -17,7 +17,6 @@ def solve_with_backtracking(sudoku)
   end
   sudoku.print_board
   candidate = sudoku.next_cell
-  binding.pry
   values_to_try = candidate.remaining_vals.dup
   forward_checking_failed = false
   neighbors = sudoku.get_neighbors(candidate.x_coord,candidate.y_coord)
@@ -47,6 +46,7 @@ def solve_with_backtracking(sudoku)
       end
       candidate.value = 0
     elsif !forward_checking_failed
+      # reheapify the entire heap
       puts "Just filled square " + candidate.x_coord.to_s + " " + candidate.y_coord.to_s + "    " + candidate.value.to_s
       # clear this cell's domain because it has been solved already
       candidate.remaining_vals.clear
@@ -64,6 +64,5 @@ def solve_with_backtracking(sudoku)
   # return the cell to the min heap IN ITS ORIGINAL STATE, then return false
   candidate.value = 0
   sudoku.MRVheap << candidate
-  binding.pry
   false
 end
