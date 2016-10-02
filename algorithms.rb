@@ -47,6 +47,11 @@ def solve_with_backtracking(sudoku)
       candidate.value = 0
     elsif !forward_checking_failed
       # reheapify the entire heap
+      updated_heap = PriorityQueue.new
+      while sudoku.MRVheap.get_length > 1
+        updated_heap << sudoku.MRVheap.pop
+      end
+      sudoku.MRVheap = updated_heap
       puts "Just filled square " + candidate.x_coord.to_s + " " + candidate.y_coord.to_s + "    " + candidate.value.to_s
       # clear this cell's domain because it has been solved already
       candidate.remaining_vals.clear
@@ -57,6 +62,10 @@ def solve_with_backtracking(sudoku)
         modified_cells.each do |neighbor|
           neighbor.undo_constraint(candidate.value)
         end
+        updated_heap = PriorityQueue.new
+        while sudoku.MRVheap.get_length > 1
+          updated_heap << sudoku.MRVheap.pop
+        end      
       end
     end
   end
