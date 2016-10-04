@@ -9,6 +9,9 @@ class Cell
    @value = value
    @preset = false
    @remaining_vals = [1,2,3,4,5,6,7,8,9]
+   if value != 0
+     @remaining_vals = [value]
+   end
   end
 
   # removes number from possible remaining values

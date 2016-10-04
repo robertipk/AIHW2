@@ -4,6 +4,8 @@ require_relative 'algorithms'
 require_relative 'cell'
 require_relative 'algorithms'
 require_relative 'puzzle'
+require_relative 'arc'
+
 require 'pry'
 
 # input = File.read("puzzle.txt").split(" ")
@@ -37,8 +39,9 @@ require 'pry'
 # ,7,3,5,9,6,1,8,2,4,5,8,9,7,1,3,4,6,2,3,1,7,2,4,6,9,8,5,6,4,2,5,9,8,1,7,3"
 # sample_string = "007020000904650000000403000300000091700906030000000005005000800020080007008001050"
 # sample_string2 = "000260701680070090190004500820100040004602900050003028009300074040050036703018000"
-sample_string3 = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
+sample_string3 = "094000130000000000000076002080010000032000000000200060000050400000008007006304008"
 #
 board = Game.new(sample_string3)
 board.print_board
-solve_with_backtracking(board)
+# solve_with_backtracking(board)
+ac3(board)
