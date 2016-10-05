@@ -130,19 +130,20 @@ class Game
 
   # return the neighbors of the cell at the specified coordinates
   # does NOT include the cell itself
+  # each cell has 20 distinct neighors
   def get_neighbors(row,column)
    neighbors = Array.new
    region_row = 3*(row/3)
    region_col = 3*(column/3)
    # add nieghbors in row
    for p in 0...9
-     unless column == p
+     unless column == p || neighbors.include?(@board[row][p])
       neighbors << @board[row][p]
      end
    end
    # add neighbors in column
    for d in 0...9
-     unless row == d
+     unless row == d || neighbors.include?(@board[d][column])
       neighbors << @board[d][column]
      end
    end
@@ -150,7 +151,9 @@ class Game
    for a in region_row...region_row+3
      for b in region_col...region_col+3
        unless a == row && b == column
-        neighbors << @board[a][b]
+         unless neighbors.include?(@board[a][b])
+          neighbors << @board[a][b]
+         end
        end
      end
    end
