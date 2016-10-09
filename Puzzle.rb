@@ -1,10 +1,7 @@
 # Robert Ip, CISC 3410, Program #2
-# https://github.com/robertipk/AIHW2
-require_relative 'utilities'
 require_relative 'cell'
 require_relative 'priorityq'
 require_relative 'algorithms'
-require 'pry'
 
 class Game
   attr_accessor :MRVheap,:board
@@ -55,14 +52,30 @@ class Game
     @MRVheap.pop
   end
 
-  def print_board
+  # print board to output file
+  def print_board(filename)
     @board.each do |row|
-      row.each do |tile|
-        print tile.value.to_s + " "
+      row.each do |cell|
+        open(filename, 'a') { |f|
+          f.print cell.value.to_s + " "
+        }
       end
-      puts ""
+      open(filename, 'a') { |f|
+        f.puts "\n"
+      }
     end
   end
+
+  # print board to console
+  def p()
+    @board.each do |row|
+      row.each do |cell|
+          print cell.value.to_s + " "
+      end
+      puts "\n"
+    end
+  end
+
 # checks if all squares are filled with numbers
   def is_complete?
     for x in 0...9
@@ -126,6 +139,24 @@ class Game
        return false
      end
      true
+  end
+
+  # determines if a 1-D array of 9 elements contains each digit 1-9 once
+  def no_dups(arr)
+   if arr.length != 9
+     return false
+   end
+   counts = Array.new(10,-1)
+   for x in 0...arr.length
+     if arr[x].to_i<1 || arr[x].to_i>9
+       return false
+     elsif counts[arr[x].to_i]>-1
+       return false
+     else
+       counts[arr[x].to_i]+=1
+     end
+   end
+   true
   end
 
   # return the neighbors of the cell at the specified coordinates

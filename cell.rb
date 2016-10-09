@@ -1,6 +1,4 @@
 # Robert Ip, CISC 3410, Program #2
-# https://github.com/robertipk/AIHW2
-require 'pry'
 class Cell
   attr_accessor :value,:remaining_vals,:x_coord,:y_coord,:preset
   def initialize(value=0,x_coord,y_coord)
@@ -16,7 +14,6 @@ class Cell
 
   # removes number from possible remaining values
   def add_constraint(number)
-    # binding.pry
     @remaining_vals.delete(number)
   end
 
